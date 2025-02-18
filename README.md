@@ -1,4 +1,4 @@
-# Gerenciamento de Despesas Pessoais API
+# Gerenciamento de Despesas Pessoais API (EM DESENVOLVIMENTO)
 
 Esta é uma API RESTful desenvolvida em Java com Spring Boot para gerenciamento de despesas e receitas pessoais. O objetivo deste projeto é permitir que os usuários gerenciem suas finanças de forma eficiente, categorizando despesas e receitas, e oferecendo funcionalidades de autenticação e autorização.
 
