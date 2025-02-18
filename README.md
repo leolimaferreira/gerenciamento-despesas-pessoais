@@ -39,16 +39,20 @@ A estrutura do projeto é organizada da seguinte forma:
    git clone https://github.com/leolimaferreira/gerenciamento-despesas-pessoais.git
    ```
 2. Navegue até o diretório do projeto:
-  ```bash
+   ```bash
    cd gerenciamento_despesas_pessoais
-  ```
+   ```
 3. Configure o banco de dados no arquivo src/main/resources/application.yml:
    ```yml
-   spring.datasource.url=jdbc:postgresql://localhost:5432/seu_banco_de_dados
-   spring.datasource.username=seu_usuario
-   spring.datasource.password=sua_senha
+   spring:
+     datasource:
+      url: jdbc:postgresql://localhost:5432/seu_banco_de_dados
+      username: seu_usuario
+      password: sua_senha
    ```
-4. mvn spring-boot:run
-
+4. Execute o projeto:
+   ```bash
+   mvn spring-boot:run
+   ```
 
 
