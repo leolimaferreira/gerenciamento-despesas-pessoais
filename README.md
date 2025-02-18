@@ -80,6 +80,6 @@ A API pode ser acessada nas seguintes rotas:
 - DELETE /receitas/{id}: Deleta uma receita.
 
 ## Contato
-- **Nome: Leonardo Ferreira
-- **Email:leonardo.limaferreira718@gmail.com
+- Nome: Leonardo Ferreira
+- Email:leonardo.limaferreira718@gmail.com
 
