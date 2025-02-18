@@ -79,4 +79,7 @@ A API pode ser acessada nas seguintes rotas:
 - PUT /receitas/{id}: Atualiza uma receita existente.
 - DELETE /receitas/{id}: Deleta uma receita.
 
+## Contato
+- **Nome: Leonardo Ferreira
+- **Email:leonardo.limaferreira718@gmail.com
 
