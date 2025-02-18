@@ -55,4 +55,24 @@ A estrutura do projeto é organizada da seguinte forma:
    mvn spring-boot:run
    ```
 
+### Uso
+A API pode ser acessada nas seguintes rotas:
+
+## Usuários
+
+POST /api/usuarios: Cadastra um novo usuário.
+GET /api/usuarios/{id}: Obtém os detalhes do usuário.
+Despesas
+
+POST /api/despesas: Adiciona uma nova despesa.
+GET /api/despesas: Lista todas as despesas.
+PUT /api/despesas/{id}: Atualiza uma despesa existente.
+DELETE /api/despesas/{id}: Deleta uma despesa.
+Receitas
+
+POST /api/receitas: Adiciona uma nova receita.
+GET /api/receitas: Lista todas as receitas.
+PUT /api/receitas/{id}: Atualiza uma receita existente.
+DELETE /api/receitas/{id}: Deleta uma receita.
+
 
