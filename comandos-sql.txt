@@ -1,0 +1,25 @@
+CREATE TABLE usuario (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    cargos VARCHAR[]
+);
+
+CREATE TABLE despesa (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    descricao VARCHAR(255) NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    categoria VARCHAR(30) NOT NULL,
+    data_despesa DATE NOT NULL,
+    id_usuario UUID NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+);
+
+CREATE TABLE receita (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    descricao VARCHAR(255) NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    data_receita DATE NOT NULL,
+    id_usuario UUID NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+);

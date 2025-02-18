@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: gerenciamento-despesas-api
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/gerenciamentodp}
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.format_sql: true
+  flyway:
+    enabled: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
