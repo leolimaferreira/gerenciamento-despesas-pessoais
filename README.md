@@ -60,9 +60,9 @@ A API pode ser acessada nas seguintes rotas:
 
 ### Usuários
 
-- **POST /usuarios: Cadastra um novo usuário.
-- **GET /usuarios/{id}: Obtém os detalhes do usuário.
-- **PUT /usuarios/{id}: Atualiza um usuário existente.
+- POST /usuarios: Cadastra um novo usuário.
+- GET /usuarios/{id}: Obtém os detalhes do usuário.
+- PUT /usuarios/{id}: Atualiza um usuário existente.
 - **DELETE /usuarios/{id}: Deleta um usuário.
 
 ### Despesas
@@ -72,7 +72,7 @@ A API pode ser acessada nas seguintes rotas:
 - **PUT /despesas/{id}: Atualiza uma despesa existente.
 - **DELETE /despesas/{id}: Deleta uma despesa.
 
-###Receitas
+### Receitas
 
 - **POST /receitas: Adiciona uma nova receita.
 - **GET /receitas: Lista todas as receitas.
