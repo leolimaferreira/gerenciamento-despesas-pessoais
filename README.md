@@ -81,5 +81,5 @@ A API pode ser acessada nas seguintes rotas:
 
 ## Contato
 - Nome: Leonardo Ferreira
-- Email:leonardo.limaferreira718@gmail.com
+- Email: leonardo.limaferreira718@gmail.com
 
