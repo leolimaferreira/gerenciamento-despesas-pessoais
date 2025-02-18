@@ -58,7 +58,7 @@ A estrutura do projeto é organizada da seguinte forma:
 ### Uso
 A API pode ser acessada nas seguintes rotas:
 
-## Usuários
+### Usuários
 
 POST /api/usuarios: Cadastra um novo usuário.
 GET /api/usuarios/{id}: Obtém os detalhes do usuário.
