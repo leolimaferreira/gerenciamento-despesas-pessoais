@@ -7,9 +7,13 @@ import io.github.leolimaferreira.gerenciamento_despesas_pessoais.model.Categoria
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.model.Despesa;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.service.DespesaService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -48,6 +52,7 @@ public class DespesaController {
                 }).orElseGet( () -> ResponseEntity.notFound().build());
     }
 
+    @Validated
     @GetMapping
     public ResponseEntity<Page<ResultadoPesquisaDespesaDTO>> pesquisa(
             @RequestParam(value = "descricao", required = false)
@@ -57,6 +62,8 @@ public class DespesaController {
             @RequestParam(value = "categoria", required = false)
             Categoria categoria,
             @RequestParam(value = "mes-despesa", required = false)
+            @Min(value = 1, message = "campo fora do tamanho padrão")
+            @Max(value = 12, message = "campo fora do tamanho padrão")
             Integer mesDespesa,
             @RequestParam(value = "pagina", defaultValue = "0")
             Integer pagina,

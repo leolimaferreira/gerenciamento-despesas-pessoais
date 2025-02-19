@@ -11,9 +11,12 @@ import io.github.leolimaferreira.gerenciamento_despesas_pessoais.model.Despesa;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.model.Receita;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.service.ReceitaService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -52,6 +55,7 @@ public class ReceitaController {
                 }).orElseGet( () -> ResponseEntity.notFound().build());
     }
 
+    @Validated
     @GetMapping
     public ResponseEntity<Page<ResultadoPesquisaReceitaDTO>> pesquisa(
             @RequestParam(value = "descricao", required = false)
@@ -59,6 +63,8 @@ public class ReceitaController {
             @RequestParam(value = "valor", required = false)
             BigDecimal valor,
             @RequestParam(value = "mes-despesa", required = false)
+            @Min(value = 1, message = "campo fora do tamanho padrão")
+            @Max(value = 12, message = "campo fora do tamanho padrão")
             Integer mesReceita,
             @RequestParam(value = "pagina", defaultValue = "0")
             Integer pagina,
