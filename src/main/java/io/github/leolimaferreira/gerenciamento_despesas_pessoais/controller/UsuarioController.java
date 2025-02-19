@@ -7,26 +7,32 @@ import io.github.leolimaferreira.gerenciamento_despesas_pessoais.service.Usuario
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor
-public class UsuarioController {
+public class UsuarioController implements GenericController{
 
     private final UsuarioService usuarioService;
     private final UsuarioMapper mapper;
 
     @PostMapping
-    public void salvar(@RequestBody @Valid UsuarioDTO dto) {
+    public ResponseEntity<Void> salvar(@RequestBody @Valid UsuarioDTO dto) {
         Usuario usuario = mapper.toEntity(dto);
         usuarioService.salvar(usuario);
+        URI location = gerarHeaderLocation(usuario.getId());
+        return ResponseEntity.created(location).build();
     }
 
+
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO', 'CONVIDADO')")
     public ResponseEntity<UsuarioDTO> obterDetalhes(@PathVariable("id") String id) {
         Optional<Usuario> usuarioOptional = usuarioService.obterPorId(UUID.fromString(id));
 
@@ -38,6 +44,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletar(@PathVariable("id") String id) {
 
         Optional<Usuario> usuarioOptional = usuarioService.obterPorId(UUID.fromString(id));
@@ -52,6 +59,7 @@ public class UsuarioController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
     public ResponseEntity<Void> atualizar (
             @PathVariable("id") String id, @RequestBody @Valid UsuarioDTO dto
     ) {

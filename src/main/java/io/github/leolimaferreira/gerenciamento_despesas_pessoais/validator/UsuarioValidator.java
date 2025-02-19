@@ -6,8 +6,6 @@ import io.github.leolimaferreira.gerenciamento_despesas_pessoais.repository.Usua
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 @RequiredArgsConstructor
 public class UsuarioValidator {
@@ -21,11 +19,11 @@ public class UsuarioValidator {
     }
 
     private boolean existeUsuarioCadastrado(Usuario usuario) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(usuario.getEmail());
-        if(usuario.getId() == null) {
-            return usuarioOptional.isPresent();
+        Usuario usuarioEncontrado = usuarioRepository.findByEmail(usuario.getEmail());
+        if (usuarioEncontrado == null) {
+            return false;
         }
 
-        return !usuario.getId().equals(usuarioOptional.get().getId()) && usuarioOptional.isPresent();
+        return usuario.getId()== null && !usuario.getId().equals(usuarioEncontrado.getId());
     }
 }
