@@ -17,7 +17,6 @@ Esta é uma API RESTful desenvolvida em Java com Spring Boot para gerenciamento 
 - **Hibernate**: ORM (Object-Relational Mapping) para interação com o banco de dados.
 - **PostgreSQL**: Sistema de gerenciamento de banco de dados.
 - **Spring Security**: Para gerenciar a autenticação e autorização dos usuários.
-- **Flyway**: Para controle de versionamento do banco de dados.
 
 ## Estrutura do Projeto
 
