@@ -1,6 +1,7 @@
 package io.github.leolimaferreira.gerenciamento_despesas_pessoais.dto.mappers;
 
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.dto.ReceitaDTO;
+import io.github.leolimaferreira.gerenciamento_despesas_pessoais.dto.ResultadoPesquisaReceitaDTO;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.model.Receita;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.repository.UsuarioRepository;
 import org.mapstruct.Mapper;
@@ -16,5 +17,5 @@ public abstract class ReceitaMapper {
     @Mapping(target = "usuario", expression = "java( usuarioRepository.findById(dto.idUsuario()).orElse(null) )")
     public abstract Receita toEntity(ReceitaDTO dto);
 
-    public abstract ReceitaDTO toDTO(Receita receita);
+    public abstract ResultadoPesquisaReceitaDTO toDTO(Receita receita);
 }
