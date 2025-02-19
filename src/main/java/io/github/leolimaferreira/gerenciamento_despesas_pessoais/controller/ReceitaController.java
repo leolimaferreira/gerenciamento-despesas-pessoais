@@ -16,28 +16,33 @@ import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/receitas")
-public class ReceitaController {
+public class ReceitaController implements GenericController{
 
     private final ReceitaService receitaService;
     private final ReceitaMapper mapper;
 
     @PostMapping
-    public void salvar(@RequestBody @Valid ReceitaDTO dto) {
+    @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
+    public ResponseEntity<Void> salvar(@RequestBody @Valid ReceitaDTO dto) {
         Receita receita = mapper.toEntity(dto);
         receitaService.salvar(receita);
-        //return ResponseEntity.created().build();
+        URI location = gerarHeaderLocation(receita.getId());
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO', 'CONVIDADO')")
     public ResponseEntity<ResultadoPesquisaReceitaDTO> obterDetalhes(@PathVariable("id") String id) {
         return receitaService.obterPorID(UUID.fromString(id))
                 .map(receita -> {
@@ -47,6 +52,7 @@ public class ReceitaController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
     public ResponseEntity<Object> excluir(@PathVariable("id") String id) {
         return receitaService.obterPorID(UUID.fromString(id))
                 .map(receita -> {
@@ -57,12 +63,13 @@ public class ReceitaController {
 
     @Validated
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO', 'CONVIDADO')")
     public ResponseEntity<Page<ResultadoPesquisaReceitaDTO>> pesquisa(
             @RequestParam(value = "descricao", required = false)
             String descricao,
             @RequestParam(value = "valor", required = false)
             BigDecimal valor,
-            @RequestParam(value = "mes-despesa", required = false)
+            @RequestParam(value = "mes-receita", required = false)
             @Min(value = 1, message = "campo fora do tamanho padrão")
             @Max(value = 12, message = "campo fora do tamanho padrão")
             Integer mesReceita,
@@ -80,6 +87,7 @@ public class ReceitaController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
     public ResponseEntity<Object> atualizar(
             @PathVariable("id") String id, @RequestBody @Valid ReceitaDTO dto
     ) {

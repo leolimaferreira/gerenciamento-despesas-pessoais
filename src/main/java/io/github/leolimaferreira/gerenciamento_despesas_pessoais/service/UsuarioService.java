@@ -7,6 +7,7 @@ import io.github.leolimaferreira.gerenciamento_despesas_pessoais.repository.Rece
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.repository.UsuarioRepository;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.validator.UsuarioValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,10 +21,10 @@ public class UsuarioService {
     private final ReceitaRepository receitaRepository;
     private final DespesaRepository despesaRepository;
     private final UsuarioValidator validator;
-    //private final PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
     public Usuario salvar(Usuario usuario) {
-        //usuario.setSenha(encoder.encode(usuario.getSenha()));
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
         validator.validar(usuario);
         return usuarioRepository.save(usuario);
     }
@@ -50,4 +51,6 @@ public class UsuarioService {
     private boolean possuiReceitas(Usuario usuario) {return receitaRepository.existsByUsuario(usuario);}
 
     private boolean possuiDespesas(Usuario usuario) {return despesaRepository.existsByUsuario(usuario);}
+
+    public Usuario obterPorEmail(String login) {return usuarioRepository.findByEmail(login);}
 }
