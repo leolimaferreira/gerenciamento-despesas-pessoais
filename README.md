@@ -69,13 +69,14 @@ A API pode ser acessada nas seguintes rotas:
 
 - POST /despesas: Adiciona uma nova despesa.
 - GET /despesas: Lista todas as despesas.
-- GET /despesas/pesquisa → Pesquisa despesas com filtros opcionais:
-   - descricao → Filtra por descrição da despesa.
-   - valor → Filtra por valor da despesa.
-   - categoria → Filtra por categoria da despesa.
-   - mes-despesa → Filtra por mês da despesa (exemplo: 1 para janeiro, 12 para dezembro).
-   - pagina → Define a página da pesquisa (padrão: 0).
-   - tamanho-pagina → Define o tamanho da página de resultados (padrão: 10).
+- GET /despesas/pesquisa → Pesquisa despesas com filtros opcionais e retorna uma página de despesas:
+  - Parâmetros opcionais:
+      - descricao → Filtra por descrição da despesa.
+      - valor → Filtra por valor da despesa.
+      - categoria → Filtra por categoria da despesa.
+      - mes-despesa → Filtra por mês da despesa (exemplo: 1 para janeiro, 12 para dezembro).
+      - pagina → Define a página da pesquisa (padrão: 0).
+      - tamanho-pagina → Define o tamanho da página de resultados (padrão: 10).
 - PUT /despesas/{id}: Atualiza uma despesa existente.
 - DELETE /despesas/{id}: Deleta uma despesa.
 
@@ -83,7 +84,13 @@ A API pode ser acessada nas seguintes rotas:
 
 - POST /receitas: Adiciona uma nova receita.
 - GET /receitas: Lista todas as receitas.
-- GET /receitas/
+- GET /receitas/pesquisa: Pesquisa receitas com filtros opcionais e retorna uma página de receitas:
+   - Parâmetros opcionais:
+      - descricao (String): Filtra receitas pela descrição.
+      - valor (BigDecimal): Filtra receitas pelo valor.
+      - mes-receita (Integer, 1-12): Filtra receitas pelo mês.
+      - pagina (Integer, padrão: 0): Define a página da pesquisa.
+      - tamanho-pagina (Integer, padrão: 10): Define o número de itens por página.
 - PUT /receitas/{id}: Atualiza uma receita existente.
 - DELETE /receitas/{id}: Deleta uma receita.
 
