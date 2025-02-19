@@ -19,7 +19,7 @@ public class Receita {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "desricao", nullable = false)
+    @Column(name = "descricao", nullable = false)
     private String descricao;
 
     @Column(name = "valor", nullable = false)

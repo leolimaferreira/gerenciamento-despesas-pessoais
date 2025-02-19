@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record ResultadoReceitaDTO(
+public record ResultadoPesquisaReceitaDTO(
         UUID id,
         String descricao,
         BigDecimal valor,

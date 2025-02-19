@@ -81,7 +81,6 @@ public class DespesaController {
                     despesa.setDescricao(entidadeAux.getDescricao());
                     despesa.setValor(entidadeAux.getValor());
                     despesa.setCategoria(entidadeAux.getCategoria());
-                    despesa.setCategoria(entidadeAux.getCategoria());
                     despesa.setUsuario(entidadeAux.getUsuario());
 
                     despesaService.atualizar(despesa);
