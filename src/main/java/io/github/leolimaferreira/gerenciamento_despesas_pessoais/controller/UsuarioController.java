@@ -4,6 +4,10 @@ import io.github.leolimaferreira.gerenciamento_despesas_pessoais.dto.UsuarioDTO;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.dto.mappers.UsuarioMapper;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.model.Usuario;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +21,19 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor
+@Tag(name = "Usuarios")
 public class UsuarioController implements GenericController{
 
     private final UsuarioService usuarioService;
     private final UsuarioMapper mapper;
 
     @PostMapping
+    @Operation(summary = "Salvar", description = "Cadastrar novo usuárip")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Cadastrado com sucesso."),
+            @ApiResponse(responseCode = "202", description = "Erro de validação."),
+            @ApiResponse(responseCode = "409", description = "Usuário já cadastrado.")
+    })
     public ResponseEntity<Void> salvar(@RequestBody @Valid UsuarioDTO dto) {
         Usuario usuario = mapper.toEntity(dto);
         usuarioService.salvar(usuario);
@@ -33,6 +44,11 @@ public class UsuarioController implements GenericController{
 
     @GetMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO', 'CONVIDADO')")
+    @Operation(summary = "Obter Detalhes", description = "Retorna os dados do usuário pelo ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuário encontrado."),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado.")
+    })
     public ResponseEntity<UsuarioDTO> obterDetalhes(@PathVariable("id") String id) {
         Optional<Usuario> usuarioOptional = usuarioService.obterPorId(UUID.fromString(id));
 
@@ -45,6 +61,12 @@ public class UsuarioController implements GenericController{
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Deletar", description = "Deleta um usuário existente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Deletado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
+            @ApiResponse(responseCode = "400", description = "Usuário possui receitas/despesas cadastradas.")
+    })
     public ResponseEntity<Void> deletar(@PathVariable("id") String id) {
 
         Optional<Usuario> usuarioOptional = usuarioService.obterPorId(UUID.fromString(id));
@@ -60,6 +82,12 @@ public class UsuarioController implements GenericController{
 
     @PutMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
+    @Operation(summary = "Atualizar", description = "Atualiza um usuário existente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Atualizado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
+            @ApiResponse(responseCode = "409", description = "Usuário já cadastrado.")
+    })
     public ResponseEntity<Void> atualizar (
             @PathVariable("id") String id, @RequestBody @Valid UsuarioDTO dto
     ) {

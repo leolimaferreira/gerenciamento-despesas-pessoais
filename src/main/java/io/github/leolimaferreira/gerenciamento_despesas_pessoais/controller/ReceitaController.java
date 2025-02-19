@@ -10,6 +10,10 @@ import io.github.leolimaferreira.gerenciamento_despesas_pessoais.model.Categoria
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.model.Despesa;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.model.Receita;
 import io.github.leolimaferreira.gerenciamento_despesas_pessoais.service.ReceitaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -27,6 +31,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/receitas")
+@Tag(name = "Receitas")
 public class ReceitaController implements GenericController{
 
     private final ReceitaService receitaService;
@@ -34,6 +39,11 @@ public class ReceitaController implements GenericController{
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
+    @Operation(summary = "Salvar", description = "Cadastrar nova receita")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Cadastrada com sucesso."),
+            @ApiResponse(responseCode = "202", description = "Erro de validação."),
+    })
     public ResponseEntity<Void> salvar(@RequestBody @Valid ReceitaDTO dto) {
         Receita receita = mapper.toEntity(dto);
         receitaService.salvar(receita);
@@ -43,6 +53,11 @@ public class ReceitaController implements GenericController{
 
     @GetMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO', 'CONVIDADO')")
+    @Operation(summary = "Obter Detalhes", description = "Retorna os dados da receita pelo ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Receita encontrada."),
+            @ApiResponse(responseCode = "404", description = "Receita não encontrada."),
+    })
     public ResponseEntity<ResultadoPesquisaReceitaDTO> obterDetalhes(@PathVariable("id") String id) {
         return receitaService.obterPorID(UUID.fromString(id))
                 .map(receita -> {
@@ -53,6 +68,11 @@ public class ReceitaController implements GenericController{
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
+    @Operation(summary = "Deletar", description = "Deleta uma receita existente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Deletada com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Receita não encontrada."),
+    })
     public ResponseEntity<Object> excluir(@PathVariable("id") String id) {
         return receitaService.obterPorID(UUID.fromString(id))
                 .map(receita -> {
@@ -64,6 +84,10 @@ public class ReceitaController implements GenericController{
     @Validated
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO', 'CONVIDADO')")
+    @Operation(summary = "Pesquisar", description = "Realiza pesquisa de todas as receitas")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Sucesso."),
+    })
     public ResponseEntity<Page<ResultadoPesquisaReceitaDTO>> pesquisa(
             @RequestParam(value = "descricao", required = false)
             String descricao,
@@ -88,6 +112,11 @@ public class ReceitaController implements GenericController{
 
     @PutMapping("{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
+    @Operation(summary = "Atualizar", description = "Atualiza uma receita existente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Atualizado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Receita não encontrada.")
+    })
     public ResponseEntity<Object> atualizar(
             @PathVariable("id") String id, @RequestBody @Valid ReceitaDTO dto
     ) {

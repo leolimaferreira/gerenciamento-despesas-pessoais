@@ -1,5 +1,6 @@
 package io.github.leolimaferreira.gerenciamento_despesas_pessoais.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Schema(name = "Despesa")
 public record DespesaDTO(
         UUID id,
         @NotBlank(message = "campo obrigatório")
